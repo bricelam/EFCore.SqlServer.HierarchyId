@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+ï»¿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
@@ -7,26 +7,42 @@
     <Authors>Brice Lambson</Authors>
     <Description>Adds hierarchyid support to the SQL Server EF Core provider</Description>
     <PackageProjectUrl>https://github.com/bricelam/EFCore.SqlServer.HierarchyId</PackageProjectUrl>
-    <PackageTags>EFCore</PackageTags>
+    <PackageTags>EFCore;SQL Server;HierarchyId</PackageTags>
     <RepositoryUrl>https://github.com/bricelam/EFCore.SqlServer.HierarchyId.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Copyright>© 2018 Brice Lambson. All rights reserved.</Copyright>
+    <Copyright>ï¿½ 2018 Brice Lambson. All rights reserved.</Copyright>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.0-alpha.1</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0-preview2-35157" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0-preview3-*" />
   </ItemGroup>
-  
-  <ItemGroup Condition="'$(TargetFramewor)' == 'netstandard2.0'">
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Unofficial.Microsoft.SqlServer.Types" Version="1.0.2" />
   </ItemGroup>
-  
-  <ItemGroup Condition="'$(TargetFramewor)' == 'net461'">
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="Microsoft.SqlServer.Types" Version="14.0.1016.290" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

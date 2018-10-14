@@ -20,7 +20,7 @@ namespace Bricelam.EntityFrameworkCore
         {
             var results = Enumerable.ToList(
                 from p in _db.Patriarchy
-                where (bool)(p.Id.GetLevel() == 0)
+                where p.Id.GetLevel() == 0
                 select p.Name);
 
             Assert.Equal(
@@ -31,7 +31,7 @@ namespace Bricelam.EntityFrameworkCore
                 ",
                 _db.Sql,
                 ignoreWhiteSpaceDifferences: true);
-            //Assert.Equal(new[] { "Abraham" }, results);
+            Assert.Equal(new[] { "Abraham" }, results);
         }
 
         public void Dispose()

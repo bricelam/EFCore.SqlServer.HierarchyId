@@ -1,11 +1,11 @@
-﻿using Bricelam.EntityFrameworkCore.Properties;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Bricelam.EntityFrameworkCore.Properties;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.ExpressionTranslators;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Microsoft.EntityFrameworkCore.SqlServer.Infrastructure
 {

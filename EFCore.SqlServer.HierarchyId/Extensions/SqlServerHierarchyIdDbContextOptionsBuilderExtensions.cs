@@ -9,7 +9,7 @@ namespace Microsoft.EntityFrameworkCore
     public static class SqlServerHierarchyIdDbContextOptionsBuilderExtensions
     {
         /// <summary>
-        /// Enable SqlHierarchyId mappings.
+        /// Enable HierarchyId mappings.
         /// </summary>
         /// <param name="optionsBuilder">The build being used to configure SQL Server.</param>
         /// <returns>The options builder so that further configuration can be chained.</returns>

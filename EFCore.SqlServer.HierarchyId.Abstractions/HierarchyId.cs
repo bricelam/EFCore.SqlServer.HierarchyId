@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.SqlTypes;
 using Microsoft.SqlServer.Types;
 
 namespace Bricelam.EntityFrameworkCore
@@ -35,7 +34,7 @@ namespace Bricelam.EntityFrameworkCore
                         : obj);
 
         public HierarchyId GetAncestor(int n)
-            => Wrap(_value.GetAncestor(n));
+            => new HierarchyId(_value.GetAncestor(n));
 
         public HierarchyId GetDescendant(HierarchyId child1, HierarchyId child2)
             => Wrap(_value.GetDescendant(Unwrap(child1), Unwrap(child2)));
@@ -47,39 +46,41 @@ namespace Bricelam.EntityFrameworkCore
             => _value.GetLevel().Value;
 
         public HierarchyId GetReparentedValue(HierarchyId oldRoot, HierarchyId newRoot)
-            => Wrap(_value.GetReparentedValue(Unwrap(oldRoot), Unwrap(newRoot)));
+            => new HierarchyId(_value.GetReparentedValue(Unwrap(oldRoot), Unwrap(newRoot)));
 
-        public bool? IsDescendantOf(HierarchyId parent)
-            => Wrap(_value.IsDescendantOf(Unwrap(parent)));
+        public bool IsDescendantOf(HierarchyId parent)
+        {
+            if (parent == null)
+                return false;
+
+            return _value.IsDescendantOf(parent._value).Value;
+        }
 
         public override string ToString()
             => _value.ToString();
 
-        public static bool? operator ==(HierarchyId hid1, HierarchyId hid2)
-            => Wrap(Unwrap(hid1) == Unwrap(hid2));
+        public static bool operator ==(HierarchyId hid1, HierarchyId hid2)
+            => Unwrap(hid1).CompareTo(Unwrap(hid2)) == 0;
 
-        public static bool? operator !=(HierarchyId hid1, HierarchyId hid2)
-            => Wrap(Unwrap(hid1) != Unwrap(hid2));
+        public static bool operator !=(HierarchyId hid1, HierarchyId hid2)
+            => Unwrap(hid1).CompareTo(Unwrap(hid2)) != 0;
 
-        public static bool? operator <(HierarchyId hid1, HierarchyId hid2)
-            => Wrap(Unwrap(hid1) < Unwrap(hid2));
+        public static bool operator <(HierarchyId hid1, HierarchyId hid2)
+            => Unwrap(hid1).CompareTo(Unwrap(hid2)) < 0;
 
-        public static bool? operator >(HierarchyId hid1, HierarchyId hid2)
-            => Wrap(Unwrap(hid1) > Unwrap(hid2));
+        public static bool operator >(HierarchyId hid1, HierarchyId hid2)
+            => Unwrap(hid1).CompareTo(Unwrap(hid2)) > 0;
 
-        public static bool? operator <=(HierarchyId hid1, HierarchyId hid2)
-            => Wrap(Unwrap(hid1) >= Unwrap(hid2));
+        public static bool operator <=(HierarchyId hid1, HierarchyId hid2)
+            => Unwrap(hid1).CompareTo(Unwrap(hid2)) <= 0;
 
-        public static bool? operator >=(HierarchyId hid1, HierarchyId hid2)
-            => Wrap(Unwrap(hid1) <= Unwrap(hid2));
+        public static bool operator >=(HierarchyId hid1, HierarchyId hid2)
+            => Unwrap(hid1).CompareTo(Unwrap(hid2)) >= 0;
 
         private static SqlHierarchyId Unwrap(HierarchyId value)
             => value?._value ?? SqlHierarchyId.Null;
 
         private static HierarchyId Wrap(SqlHierarchyId value)
             => value.IsNull ? null : new HierarchyId(value);
-
-        private static bool? Wrap(SqlBoolean value)
-            => value.IsNull ? null : (bool?)value.Value;
     }
 }
